@@ -11,6 +11,7 @@
     <modules>
         <module>calculator</module>
         <module>calculator-client</module>
+        <module>url-shortener</module>
     </modules>
 
 </project>
