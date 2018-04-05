@@ -4,6 +4,6 @@
         version="2.0">
     <endpoint
             name="Calculator"
-            implementation="nl.vu.CalculatorService"
+            implementation="nl.vu.Calculator"
             url-pattern="/calculator"/>
 </endpoints>

@@ -8,7 +8,7 @@ import javax.jws.WebService;
  * @since 2018-04-05
  */
 @WebService
-public class CalculatorService {
+public class Calculator {
 
     @WebMethod
     public double add(double a, double b) {
