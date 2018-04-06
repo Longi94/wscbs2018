@@ -18,15 +18,7 @@ public class UrlService {
 
     private Map<Long, String> urls = new HashMap<>();
 
-    public String getUrl(String strId) {
-        Long id;
-
-        try {
-            id = Long.valueOf(strId);
-        } catch (NumberFormatException e) {
-            throw new NotFoundException("id not found");
-        }
-
+    public String getUrl(Long id) {
         String url = urls.get(id);
 
         if (url == null) {
@@ -36,15 +28,7 @@ public class UrlService {
         return url;
     }
 
-    public void delete(String strId) {
-        Long id;
-
-        try {
-            id = Long.valueOf(strId);
-        } catch (NumberFormatException e) {
-            throw new NotFoundException("id not found");
-        }
-
+    public void delete(Long id) {
         if (!urls.containsKey(id)) {
             throw new NotFoundException("id not found");
         }
@@ -64,5 +48,13 @@ public class UrlService {
 
     public void deleteAll() {
         urls.clear();
+    }
+
+    public void update(Long id, String url) {
+        if (!urls.containsKey(id)) {
+            throw new NotFoundException("id not found");
+        }
+
+        urls.put(id, url);
     }
 }

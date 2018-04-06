@@ -30,17 +30,23 @@ public class UrlController {
     }
 
     @GetMapping("/{id}")
-    public void get(HttpServletResponse response, @PathVariable("id") String id) throws IOException {
+    public void get(HttpServletResponse response, @PathVariable("id") Long id) throws IOException {
         response.sendRedirect(urlService.getUrl(id));
     }
 
     @PutMapping("/{id}")
-    public void put(@PathVariable("id") String id) {
-        // TODO: 2018-04-05  
+    public void put(@PathVariable("id") Long id, @RequestParam("url") String url) {
+        try {
+            new URL(url);
+        } catch (MalformedURLException e) {
+            throw new BadRequestException("malformed url");
+        }
+
+        urlService.update(id, url);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") String id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         urlService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
