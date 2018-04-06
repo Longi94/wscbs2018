@@ -1,11 +1,13 @@
 package nl.vu;
 
+import nl.vu.exception.BadRequestException;
 import nl.vu.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * @author lngtr
@@ -13,6 +15,9 @@ import java.util.Set;
  */
 @Service
 public class UrlService {
+
+    private static final Pattern URL_PATTERN =
+            Pattern.compile("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]");
 
     private long counter = 0;
 
@@ -41,6 +46,10 @@ public class UrlService {
     }
 
     public long addUrl(String url) {
+        if (!URL_PATTERN.matcher(url).matches()) {
+            throw new BadRequestException("malformed url");
+        }
+
         long id = counter++;
         urls.put(id, url);
         return id;
@@ -51,6 +60,10 @@ public class UrlService {
     }
 
     public void update(Long id, String url) {
+        if (!URL_PATTERN.matcher(url).matches()) {
+            throw new BadRequestException("malformed url");
+        }
+
         if (!urls.containsKey(id)) {
             throw new NotFoundException("id not found");
         }

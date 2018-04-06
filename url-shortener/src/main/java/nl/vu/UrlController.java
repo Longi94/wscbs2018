@@ -1,6 +1,5 @@
 package nl.vu;
 
-import nl.vu.exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,10 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Map;
 import java.util.Set;
 
@@ -36,12 +33,6 @@ public class UrlController {
 
     @PutMapping("/{id}")
     public void put(@PathVariable("id") Long id, @RequestParam("url") String url) {
-        try {
-            new URL(url);
-        } catch (MalformedURLException e) {
-            throw new BadRequestException("malformed url");
-        }
-
         urlService.update(id, url);
     }
 
@@ -58,12 +49,6 @@ public class UrlController {
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> post(@RequestParam("url") String url) throws URISyntaxException {
-        try {
-            new URL(url);
-        } catch (MalformedURLException e) {
-            throw new BadRequestException("malformed url");
-        }
-
         long id = urlService.addUrl(url);
         return ResponseEntity.created(new URI("/" + id)).build();
     }
