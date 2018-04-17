@@ -12,7 +12,7 @@ import java.net.URL;
 public class CalculatorClient {
 
     public static void main(String[] args) throws MalformedURLException {
-        URL url = new URL("http://localhost:8080/calculator/calculator?wsdl");
+        URL url = new URL("http://localhost:9999/calculator?wsdl");
 
         QName qName = new QName("http://vu.nl/", "CalculatorService");
         Service service = CalculatorService.create(url, qName);
