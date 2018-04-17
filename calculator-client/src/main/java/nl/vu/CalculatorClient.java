@@ -12,16 +12,24 @@ import java.net.URL;
 public class CalculatorClient {
 
     public static void main(String[] args) throws MalformedURLException {
-        URL url = new URL("http://localhost:9999/calculator?wsdl");
+        if (args.length == 0) {
+            System.out.println("Usage missing wsdl url parameter");
+        }
+
+        URL url = new URL(args[0]);
 
         QName qName = new QName("http://vu.nl/", "CalculatorService");
         Service service = CalculatorService.create(url, qName);
 
         Calculator calculator = service.getPort(Calculator.class);
 
+        System.out.println("Calling add(), result:");
         System.out.println(calculator.add(3.0, 2.0));
+        System.out.println("Calling sub(), result:");
         System.out.println(calculator.sub(3.0, 2.0));
+        System.out.println("Calling mul(), result:");
         System.out.println(calculator.mul(3.0, 2.0));
+        System.out.println("Calling div(), result:");
         System.out.println(calculator.div(1.0, 2.0));
     }
 }
